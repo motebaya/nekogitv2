@@ -16,6 +16,7 @@ class Modules(Session):
 		self.headers.update({
 			"User-Agent": self.user_agent()
 		})
+		self.mobile_ua = "Mozilla/5.0 (Linux; Android 11; Infinix X6810) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36"
 		self.get_time = lambda : ctime().split()[-2]
 
 	def user_agent(self):
@@ -88,7 +89,9 @@ class NekoV2(Modules):
 
 	def get_hentai_list(self):
 		self.debug("getting all hentai list")
-		page = requests.get("https://nekopoi.care/hentai-list", headers=self.headers).text
+		page = requests.get("https://nekopoi.care/hentai-list", headers={
+			"user-agent": self.mobile_ua
+		}).text
 		soup = self.parse(page)
 		for li in soup.find_all(class_="title-cell"):
 			yield {
@@ -102,7 +105,9 @@ class NekoV2(Modules):
 		self.debug(F"getting info for: {d.get('id')}")
 		page = requests.get(
 			f"https://nekopoi.care/hentai/{d.get('id')}/",
-			headers=self.headers).text
+			headers={
+				"user-agent": self.mobile_ua
+			}).text
 		soup = self.parse(page)
 		if (info := soup.find(class_="listinfo")):
 			d.update({
@@ -136,7 +141,9 @@ class NekoV2(Modules):
 	def get_download(self, title: str):
 		self.debug(f"getting download list: {title}")
 		page = requests.get(
-			f"https://nekopoi.care/{title}/", headers=self.headers).text
+			f"https://nekopoi.care/{title}/", headers={
+				"user-agent": self.mobile_ua
+			}).text
 		soup = self.parse(page)
 		if (box := soup.find(class_="boxdownload")):
 			return list(map(
