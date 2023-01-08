@@ -4,7 +4,7 @@ from rich import print as rich_print
 from rich.tree import Tree
 from rich import box
 from rich.table import Table
-from rich.prompt import Prompt
+from rich.prompt import Prompt, Confirm
 from os import listdir, mkdir as makedir
 from os.path import exists as path_exists
 from nekov2 import json, ctime, NekoV2, requests, sys
@@ -221,11 +221,11 @@ def main():
 					t = 1
 					for k, h in enumerate(hentai, 1):
 						sys.stdout.write(
-							f"\r \033[37m Checking Update: \033[32m{k} \033[37mof \033[33m{len(hentai)}\033[0m")
+							f"\r![{NekoV2().get_time()}]\033[37m Checking Update: \033[32m{k} \033[37mof \033[33m{len(hentai)}\033[0m")
 						sys.stdout.flush()
 						if h.get('id') not in load_title:
 							NekoV2().debug(
-								f"({t}) new update :{h.get('title')}"
+								f"\n({t}) new update :{h.get('title')}"
 							)
 							save_data(h)
 							t += 1
@@ -238,7 +238,7 @@ def main():
 						exit()
 					else:
 						rich_print(
-							f"[green] success update, new: [yellow]{t}"
+							f"\n[green] success update, new: [yellow]{t}"
 						)
 						exit()
 				else:
@@ -248,6 +248,12 @@ def main():
 			exit()
 	else:
 		if choice == 4:
+			if list(Load_db()):
+				requests.warnings.warn(
+					"u already have `database` list!"
+				)
+				if not Confirm.ask("[green] Reset?"):
+					main()
 			try:
 				hentai = list(NekoV2(
 					).get_hentai_list(
