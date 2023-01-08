@@ -135,7 +135,8 @@ class NekoV2(Modules):
 
 	def get_download(self, title: str):
 		self.debug(f"getting download list: {title}")
-		page = requests.get(f"https://nekopoi.care/{title}/", headers=self.headers).text
+		page = requests.get(
+			f"https://nekopoi.care/{title}/", headers=self.headers).text
 		soup = self.parse(page)
 		if (box := soup.find(class_="boxdownload")):
 			return list(map(
