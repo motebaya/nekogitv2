@@ -1,10 +1,12 @@
-### NekopoiV2
+## NekopoiV2
 
 <p align="center">
-	<img src="images/20230108_134359.png">
+	<img width="37%" height="37%" src="images/20230108_134359.png">
 </p>
 
 <sub><sup>[source](https://www.deviantart.com/nephi-chanmoe/art/NekoPoi-Logo-874921085)</sup></sub>
+
+![](https://img.shields.io/badge/Python-3.10-blue)
 
 -   get hanime list:
 
@@ -30,19 +32,10 @@ NekoV2().get_download(
 )
 ```
 
-### Menu
+## Menu
 
-```
-      ╔╗╔┌─┐┬┌─┌─┐╔═╗┌─┐╦
-      ║║║├┤ ├┴┐│ │╠═╝│ │║
-      ╝╚╝└─┘┴ ┴└─┘╩  └─┘╩v2
-┌─────────────────────────────┐
-│ Menu: by motebaya           │
-├─────────────────────────────┤
-│  1). search title fom list  │
-│  2). quick choice from list │
-│  3). check update from site │
-│  4). get all list from site │
-└─────────────────────────────┘
- Choice [1/2/3/4]:
-```
+
+- [x] search title fom list
+- [x] quick choice from list
+- [x] check update from site
+- [x] get all list from site
