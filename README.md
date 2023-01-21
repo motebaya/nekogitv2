@@ -27,9 +27,7 @@ NekoV2().get_hentai_info(
 
 ```
 @param: str
-NekoV2().get_download(
-	info['eps'][<index>][<eps>]
-)
+NekoV2().get_download(info['eps'][<index>][<eps>])
 ```
 
 ## Menu
