@@ -10,6 +10,8 @@
 
 </div>
 
+### Intro
+
 - made with [python asynchronous](https://docs.python.org/3/library/asyncio.html)
 - [httpx client](https://www.python-httpx.org/async/) for making async requests
 - [aiohttp](https://docs.aiohttp.org/en/stable/) client for downloading images
@@ -45,7 +47,7 @@ python main.py
 python main.py --site nekopoi.care
 ```
 
-you'il see like this, wait until all list of index fetched and saved.
+- you'il see like this, wait until all list of index fetched and saved.
 
 ![image](src/main-fetch-all.png)
 
@@ -54,7 +56,7 @@ python --image <database/data.json>
 python --image database/Nekopoi-hentai-list.json
 ```
 
-this will downloading all images cover and thumbnail with **async** as i say before. see folder src/<thumbnail/cover> this is location for save all images.
+- this will downloading all images cover and thumbnail with **async** as i say before. see folder src/<thumbnail/cover> this is location for save all images.
 
 ![downloading image](src/main-downloading-image.png)
 
@@ -62,7 +64,7 @@ this will downloading all images cover and thumbnail with **async** as i say bef
 python --bypass database/Nekopoi-hentai-list.json
 ```
 
-grep all ouo.io url from json string then bypass it... yah, this shouldy work , but the [cloudflare turnstill](https://www.cloudflare.com/products/turnstile/) always block the request. as you see in this image
+- grep all ouo.io url from json string then bypass it... yah, this shouldy work , but the [cloudflare turnstill](https://www.cloudflare.com/products/turnstile/) always block the request. as you see in this image
 
 ![main bypass](src/main-bypass.png)
 
