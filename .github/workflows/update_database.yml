@@ -23,7 +23,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run main bruh
-        run: python main.py --help
+        run: python main.py --site nekopoi.care
       
       - name: Checking Any updated or not
         id: git-status
@@ -40,7 +40,7 @@ jobs:
           git config --local user.email ${{ secrets.GH_EMAIL }}
           git status
           git add .
-          git commit -m "Last Up: $(py -c 'from datetime import datetime; print(datetime.now().strftime("%B %d - %I:%M:%S %p"))') - with length: $(cat database/Nekopoi-hentai-list.json | jq | jq length)"
+          git commit -m "updated: $(python -c 'from datetime import datetime; print(datetime.now().strftime("%B %d - %I:%M:%S %p"))') - with length: $(cat database/Nekopoi-hentai-list.json | jq | jq length)"
 
       - name: Push changes
         uses: ad-m/github-push-action@master

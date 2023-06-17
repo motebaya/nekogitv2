@@ -26,7 +26,7 @@ It's very useful for I/O-bound operations, such as network requests or file oper
 - [x] fetch all hanime list from index page
 - [x] download all images cover and thumbnail
 - [ ] bypass all shortlink download url
-- [x] auto update with github action 1 week
+- [x] run workflows for update with github action
 
 ### Install this
 
