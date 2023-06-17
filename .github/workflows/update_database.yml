@@ -28,7 +28,7 @@ jobs:
       - name: Checking Any updated or not
         id: git-status
         run: |
-          changes=$(git status --porcelain)
+          changes="$(git status --porcelain)"
           echo "changes=${changes}" >> $GITHUB_ENV
 
       - name: Start Push
