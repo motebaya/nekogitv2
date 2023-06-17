@@ -28,20 +28,20 @@ jobs:
       - name: Checking Any updated or not
         id: git-status
         run: |
-          git status --porcelain
-          echo "::set-output name=changes::$(git status --porcelain)"
+          changes=$(git status --porcelain)
+          echo "changes=${changes}" >> $GITHUB_ENV
 
       - name: Start Push
         run: |
-          git config --local user.name ${{ secrets.username }}
-          git config --local user.email ${{ secrets.email }}
+          git config --local user.name ${{ secrets.GH_USERNAME }}
+          git config --local user.email ${{ secrets.GH_EMAIL }}
           git status
-          git add ./database/*
+          git add .
           git commit -m "Last Up: $(py -c 'from datetime import datetime; print(datetime.now().strftime("%B %d - %I:%M:%S %p"))') - with length: $(cat database/Nekopoi-hentai-list.json | jq | jq length)"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           branch: main
-        if: steps.git-status.outputs.changes != ''
+        if: env.CHANGES != ''
