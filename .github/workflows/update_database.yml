@@ -1,0 +1,47 @@
+# github action config auto update database
+
+name: Update database
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.10
+
+      - name: Install modules
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run main bruh
+        run: python main.py --help
+      
+      - name: Checking Any updated or not
+        id: git-status
+        run: |
+          git status --porcelain
+          echo "::set-output name=changes::$(git status --porcelain)"
+
+      - name: Start Push
+        run: |
+          git config --local user.name ${{ secrets.username }}
+          git config --local user.email ${{ secrets.email }}
+          git status
+          git add ./database/*
+          git commit -m "Last Up: $(py -c 'from datetime import datetime; print(datetime.now().strftime("%B %d - %I:%M:%S %p"))') - with length: $(cat database/Nekopoi-hentai-list.json | jq | jq length)"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          branch: main
+        if: steps.git-status.outputs.changes != ''
