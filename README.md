@@ -10,17 +10,6 @@
 
 </div>
 
-### Intro
-
-- made with [python asynchronous](https://docs.python.org/3/library/asyncio.html)
-- [httpx client](https://www.python-httpx.org/async/) for making async requests
-- [aiohttp](https://docs.aiohttp.org/en/stable/) client for downloading images
-- [aiofiles](https://pypi.org/project/aiofiles/) for saving image from request
-
-Asynchronous allows to write code that can perform with multiple tasks concurrently without blocking the execution of other code.
-
-It's very useful for I/O-bound operations, such as network requests or file operations, where waiting for the completion of one task should not prevent other tasks from executing.
-
 ### Todo
 
 - [x] fetch all hanime list from index page
