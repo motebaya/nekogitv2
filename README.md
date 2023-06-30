@@ -37,7 +37,7 @@ python main.py
 python main.py --site nekopoi.care
 ```
 
-- you'il see like this, wait until all list of index fetched and saved.
+- wait until all list of index fetched and saved.
 
 ![image](src/main-fetch-all.png)
 
@@ -46,7 +46,7 @@ python --image <database/data.json>
 python --image database/Nekopoi-hentai-list.json
 ```
 
-- this will downloading all images cover and thumbnail with **async** as i say before. see folder src/<thumbnail/cover> this is location for save all images.
+- this will downloading all images cover and thumbnail with **asynchronous** . see folder src/<thumbnail/cover> this is location for save all images.
 
 ![downloading image](src/main-downloading-image.png)
 
