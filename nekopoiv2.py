@@ -195,46 +195,48 @@ async def extract_link(data: str) -> None:
         'bokepku': Rajahentai.Rajahentai(),
         'ouo': Nekopoi.Nekopoi()
     }
-
+    
     _regex = re.compile(
         r"https?:\/\/(?:ouo\.io\/[\w+]*|bokepku.xyz\/\w+\.php\?id\=[0-9]+)")
-
+    
     if (url_list := _regex.findall(data)):
         tipe = urlparse(
             url_list[0]
         ).netloc.split(
             ".")[0]
-
+        
         failed_get = len(url_list)
         logger.debug(f"detected: {tipe}, total url collected: \033[32m{len(url_list)}")
-        try:
-            for j, k in enumerate(url_list, 1):
+        for j, k in enumerate(url_list, 1):
+            try:
                 logger.debug(f" ({j}) of ({len(url_list)}) getting redirect url: {k}")
-                final_url = await prog[tipe].get_redirect(k)
-                if final_url:
-                    logger.info(f"bypassed: {final_url}")
+                if (final_url := await prog[tipe].get_redirect(k)):
+                    logger.info(f"bypassed: \033[32m{final_url}\033[0m")
                     data = data.replace(
                         k, final_url
                     )
                     failed_get -= 1
+            except (
+                KeyboardInterrupt, 
+                asyncio.CancelledError, 
+                ssl.SSLWantReadError, 
+                asyncio.exceptions.CancelledError
+            ):
+                if failed_get != len(url_list):
+                    """
+                    save last bypassed index
+                    """
+                    prog[tipe].savedata(
+                        "{}-hentai-list.json".format(
+                            prog[tipe].__class__.__name__.title()
+                        ),
+                        data
+                    )
+                    logger.info("Exception, data saved with last line: {}".format(
+                        str(len(url_list) - failed_get)
+                    ))
+                    return None
                 else:
-                    continue
-        except (KeyboardInterrupt, asyncio.CancelledError):
-            if failed_get != len(url_list):
-                """
-                save last bypassed index
-                """
-                prog[tipe].savedata(
-                    "{}-hentai-list.json".format(
-                        prog[tipe].__class__.__name__.title()
-                    ),
-                    data
-                )
-                logger.info("Exception, data saved with last line: {}".format(
-                    str(len(url_list) - failed_get)
-                ))
-                return
-            else:
-                logger.warning("Exception, no data to saved")
-                return
-    return
+                    logger.warning("Exception, no data to saved")
+                    return None
+    return None
