@@ -9,7 +9,7 @@ from typing import Tuple, Dict
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from .logger import logger
-import json, os
+import json, os, re
 
 class Request(AsyncClient):
     def __init__(self) -> None:
@@ -18,6 +18,9 @@ class Request(AsyncClient):
         self.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36'
 
 class Base(Request):
+
+    def strip_host(self, url: str) -> str:
+        return re.sub(r"https?://[^/]+", "", url)
 
     def get_id(self, url: str) -> str:
         return urlparse(
