@@ -15,6 +15,7 @@
 - [x] fetch all hanime list from index page
 - [x] download all images cover and thumbnail
 - [ ] bypass all shortlink download url
+- [x] bypass `rajahentai.xyz` redirect url download
 - [x] run workflows for update with github action
 
 ### Install this
