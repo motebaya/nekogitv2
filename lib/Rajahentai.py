@@ -6,7 +6,7 @@
 from . import Base
 from .logger import logger
 from typing import Generator, Dict, Union, Optional, List
-from urllib.parse import urlparse, urlunparse, parse_qs, urljoin
+from urllib.parse import urlparse, urlunparse, parse_qs, urljoin, unquote
 import re
 
 class Rajahentai(Base):
@@ -120,30 +120,37 @@ class Rajahentai(Base):
     """
     async def get_redirect(self, url: str) -> str:
         if (re.match(r"^https?:\/\/bokepku\.xyz\/\w+\.php\?id\=[0-9]+$", url)):
-            q = urlparse(url)
             """
-            maybe got blocked by fuck*ing cloudflare turnstill lmao XD
-            bokepku.xyz/server.php?host=rajahentai&id=[id]
+            maybe got blocked by cloudflare turnstill
+            bokepku.xyz/srvsb.php?id=[id]
             """
             self.set_netloc(url)
-            server_redirect = urlparse(
-                urlunparse((
-                    q.scheme,
-                    q.netloc, 
-                    '/server.php', 
-                    q.params,
-                    f"host=rajahentai&{q.query}", 
-                    q.fragment
-                )
-            ))
             page = await self.get(
-                f"{server_redirect.path}?{server_redirect.query}",
-                    follow_redirects=False)
-            if page.status_code == 200:
+                self.strip_host(url),
+                follow_redirects=False
+            )
+            if page.status_code == 302:
                 if (location := page.headers.get('Location')):
-                    return parse_qs(urlparse(
-                        location
-                    ).query).get('s', [''])[0]
+                    unquoted_url = urlparse(
+                        unquote(
+                            location
+                        )
+                    )
+                    if unquoted_url.query.strip():
+                        redirect_url = parse_qs(
+                            unquoted_url.query
+                        ).get('s')[0]
+                        self.set_netloc(redirect_url)
+                        
+                        page = await self.get(
+                            self.strip_host(redirect_url), follow_redirects=False
+                        )
+                        if (location := page.headers.get('Location')):
+                            return location
+                        return None
+                    logger.warning("empty query string url: {}".format(urlunparse(unquoted_url)))
+                    return None
+                logger.warning("no redirect found?: {}".format(url))
                 return None
             logger.warning("failed get redirect url: \033[31mcloudflare turnstill blocked.")
         return None
