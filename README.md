@@ -1,5 +1,5 @@
 <div align='center'>
-	<h6>Nekogitv2</h6>
+	<h4>Nekogitv2</h4>
 
 ---
 
