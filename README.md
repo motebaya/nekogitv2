@@ -19,6 +19,8 @@
 - [x] download all images cover/thumbnails.
 - [x] convert json SQlite3 database
 - [ ] bypass redirect shortlink
+- [X] pagination page
+- [x] search by query
 
 ### Install This
 
