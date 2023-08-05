@@ -1,0 +1,55 @@
+{% import "styles.html" as style %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {{ style.css() }}
+  <meta property="og:title" content="Poi Poi - dev" />
+  <meta property="og:description" content="genres list" />
+  <title>Poi Poi - Index</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="content">
+      {{ style.header(url_for('hentai_list')) }}
+      <div class="container-sm">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-10">
+            <div class="card f-fira">
+              <div class="card-header f-virgil fs-4">
+                Poi Poi <span class="text-blue"> .dev </span>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <ul class="sitemap">
+                      <li>
+                        <p class="fst-normal fs-6 text-secondary">Genre list (<i class="fa fa-eye"></i><span
+                            class="text-blue">
+                            {{ total_visit }} </span>):</p>
+                        <ul>
+                          {% for i in items %}
+                          <li>
+                            <a href="{{ url_for('genres', genre=i.genre_id)}}"><i class="fa fa-tag me-2"></i>{{
+                              i.genre_name | title
+                              }}</a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ style.footer() }}
+  </div>
+  {{ style.js() }}
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% import "styles.html" as style %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        {{ style.css() }}
+        <meta property="og:title" content="Poi Poi - page comming soon" />
+        <meta property="og:description" content="page will be comming ASAP" />
+        <title>Poi Poi - Comming soon</title>
+    </head>
+
+    <body>
+
+        {{ style.header(url_for('hentai_list')) }}
+        <div class="wrapper">
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-7">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h4 class="text-darl fw-bold">
+                                        Comming Soon..
+                                    </h4>
+                                    <p class="card-text text-blue">
+                                        the page will be comming as soon..
+                                    </p>
+                                    <a href="{{ url_for('index') }}" class="btn btn-outline-success btn-sm"><i
+                                            class="fa fa-home me-1"></i>Home</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ style.footer() }}
+
+    </body>
+
+</html>
