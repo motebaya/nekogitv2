@@ -19,7 +19,7 @@
 - [x] download all images cover/thumbnails.
 - [x] convert json SQlite3 database
 - [ ] bypass redirect shortlink
-- [X] pagination page
+- [x] pagination page
 - [x] search by query
 
 ### Install This
@@ -50,7 +50,16 @@ note: `more docs in source code.`
 
 ### Usage (web server)
 
-- rename file `.env-example` to `.env`. fill the blank value. or remove comment to use default.
+- Setup database
+
+  <div>
+
+  1. Extract site using arg `-e hentai`, the result saved in [here](database/) as name `nekopoi.json`. see [example result](database#Json%20Result%20Example%3A).
+  2. Download all covers/thumbnail images with arg `-i hentai `, all images saved in [here](database/hentai)
+  3. Create SQlite3 database file from json file with arg `-d hentai`, this will generate result `hentaiList.db` in folder `database`. now all done.
+  </div>
+
+- Rename file `.env-example` to `.env`. fill the blank value, or using value in comment as default.
   ```
   PORT="<port>" # 5000
   HOST="<host>>" # 0.0.0.0
@@ -58,7 +67,7 @@ note: `more docs in source code.`
   FLASK_SECRET_KEY="<flask_key>" # flaskproject123
   DBPATH="<database_path>" # /root/database/hentaiList.db
   ```
-- run on local
+- Run on local
 
   ```
   python index.py
@@ -66,7 +75,9 @@ note: `more docs in source code.`
   * Running on http://127.0.0.1:5000
   ```
 
-- preview
+  it's availabe for get all `jav_list` from index page, but too much different extended info for each of items. see it self by extract it with arg `-e jav`, it will save in same json database in key `jav_list`.
+
+- Preview: generate with [chrome extension](https://chrome.google.com/webstore/detail/mobile-simulator-responsi/ckejmhbmlajgoklhgbapkiccekfoccmk/related)
 
   ![home](screenshoot/preview.png)
   ![hentai list](screenshoot/preview2.png)
