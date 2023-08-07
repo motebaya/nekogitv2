@@ -100,14 +100,15 @@ class Base(Request):
             ), style="not bold"
         )
 
-    def dbNotEmpty(self) -> bool:
+    def dbNotEmpty(self) -> Union[bool, None]:
         """
         return True if database is not empty and vice versa.
         """
-        return all([
-            os.path.exists(self.db_path),
-            os.path.getsize(self.db_path) >= 1
-        ])
+        if os.path.exists(self.db_path):
+            return os.path.getsize(
+                self.db_path
+            ) >= 1
+        return None
 
     def savedata(self, data: dict) -> None:
         """
