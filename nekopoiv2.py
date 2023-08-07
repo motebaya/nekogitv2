@@ -208,7 +208,7 @@ class Extractor(object):
                             ))
 
                         # fetch each thumbnail from episodes.
-                        for x, thumbnail  in enumerate(image['episode']):
+                        for x, thumbnail  in enumerate(image.get('episode', [])):
                             if url(thumbnail[str(x+1)].get('thumbnail', '')):
                                 self.module.show_message("downloading thumbnail[cyan] :: [green]{} of [yellow]{}".format(
                                     x+1, len(thumbnail[str(x+1)])-1
