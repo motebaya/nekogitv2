@@ -53,19 +53,6 @@ class Base(Request):
             logger.debug(f"host change: {netloc}")
             return
         return
-
-    def get_form_data(self, html: str) -> Union[
-        Tuple[str, Dict[str, str]], Tuple
-    ]:
-        soup = self.parse(html)
-        if (form := soup.find('form')):
-            return (
-                form.attrs.get('action'), 
-                {
-                    _.attrs.get('name'): _.attrs.get('value') for _ in form.find_all('input')
-                }
-            )
-        return ()
     
     def load_db(self) -> dict:
         # DRY
