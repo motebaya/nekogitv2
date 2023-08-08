@@ -41,19 +41,7 @@ class Base(Request):
         return BeautifulSoup(
             text, 'html.parser'
         )
-    
-    def set_netloc(self, url: str) -> None:
-        netloc = urlparse(url).netloc
-        if netloc != self.base_url.netloc:
-            self.base_url = URL(str(
-                self.base_url
-            ).replace(
-                self.base_url.netloc.decode(), netloc
-            ))
-            logger.debug(f"host change: {netloc}")
-            return
-        return
-    
+
     def load_db(self) -> dict:
         # DRY
         return json.loads(open(
@@ -76,7 +64,7 @@ class Base(Request):
                 border_style="blue"
             )
         )
-    
+
     def show_message(self, msg: str):
         """
         custom message
