@@ -11,7 +11,7 @@
 
 A mirror site built with Flask, Bootstrap, and other libraries. The web server is designed to have no direct interaction (_live scrape_) with the original website at all. Therefore, it will extract all _hanime_ content to JSON and convert it to an SQLite3 database.
 
-Lets; see a simple flow:
+Lets, see a simple flow:
 
 ```mermaid
 graph TB
