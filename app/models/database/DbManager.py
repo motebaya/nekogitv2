@@ -135,21 +135,6 @@ class Genres(db.Model):
                           allgenres.get(genre_, "#") == highlight else '', genre_.strip()
                     ), genre.split(", ")
                 )).strip(", ")
-                # formated = []
-                # for genre_ in genre.split(', '):
-                #     if allgenres.get(genre_, "#") == highlight:
-                #         formated.append(
-                #           "<a href='/genres/{}' class='bg-warning navbar-brand fw-medium' rel='noopener'>{}</a>, ".format(
-                #               allgenres.get(genre_, "#"), genre_.strip()
-                #           )
-                #         )
-                #     else:
-                #         formated.append(
-                #           "<a href='/genres/{}' rel='noopener'>{}</a>, ".format(
-                #             allgenres.get(genre_, "#"), genre_.strip()
-                #           )
-                #         )
-                # return ''.join(formated).strip(", ")
         return ""
 
     @staticmethod
