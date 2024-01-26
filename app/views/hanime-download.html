@@ -1,0 +1,102 @@
+{% import "contents.html" as layout %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ layout.header(title, desc) }}
+  </head>
+
+  <body>
+    {{ layout.heading() }}
+    <div class="container-md">
+        <div class="row justify-content-center">
+        <div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-header text-center earth-text">
+              soshite watashi wa ojisan ni episode 1 subtitle indonesia
+            </div>
+            <div class="card-body">
+              {% if tojson(eps.stream) | length != 0 and 'batch' not in eps.episodeid.lower() %}
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-10">
+                        {% for stream in tojson(eps.stream) %}
+                        <div class="ratio ratio-16x9 border border-secondary border-opacity-50 shadow stream-embed" id="stream{{ loop.index }}">
+                            <iframe
+                          src="{{ stream.get('stream' + loop.index | string) }}"
+                          title="stream"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                          ></iframe>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="text-center mt-3 col earth-text">
+                  {% for stream in tojson(eps.stream) %}
+                  <a href="#stream{{ loop.index }}" class="btn btn-sm btn-outline-secondary shadow me-1 change-stream">
+                      <i class="bi bi-arrow-left-right me-1"></i>Stream {{ loop.index }}
+                    </a>
+                    {% endfor %}
+                </div>
+              {% else %}
+                  <div class="row justify-content-center align-items-center">
+                      <div class="col-md-10 text-center">
+                        <img src="data:image/png;base64,{{ tobase64(eps.thumbnail).decode() }}" alt="{{ eps.thumbnail_alt }}" class="img-fluid img-thumbnail">
+                      </div>
+                  </div>
+              {% endif %}
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <p class="earth-text text-secondary" style="font-size: 14px">
+                    <strong class="fw-bold">Synopsis:</strong>
+                    Nanami dan Sakura bersahabat sangat akrab. Nanami anak yatim
+                    yang hanya mempunyai seorang ibu. Ibunya Sakura dan ibunya
+                    Nanami sudah berteman sejak kecil. Pada awalnya Sakura dan
+                    Nanami hanya teman sekelas, tapi mereka sekarang sudah
+                    sangat akrab layaknya seperti keluarga. Ibu dan ayahnya
+                    Sakura juga sangat menyayangi Nanami seperti anak sendiri.
+                    Ayahnya Sakura orangnya baik, pintar dan menyenangkan,
+                    bahkan aku sudah biasa berangkat sekolah diantar oleh mobil
+                    ayah Sakura. Ketika pulang sekolah untuk upload foto ke
+                    sosmed, Sakura ada urusan yang perlu diselesaikan dan
+                    meminta Nanami untuk pulang duluan ke rumah Sakura dengan
+                    memberikan kuncinya. Namun, tidak disangka ketika Nanami
+                    masuk ke rumah Sakura ternyata ayahnya Sakura sedang coli
+                    sambil mencium sempaknya Sakura. Karena hal itu, Nanami
+                    merasa gak terima perbuatan ayahnya Sakura yang sange dengan
+                    anaknya sendiri sehingga ayahnya Sakura meminta Nanami untuk
+                    menggantikan Sakura untuk memuaskan nafsu birahinya.
+                  </p>
+                </div>
+              </div>
+              {% for link in tojson(eps.link) %}
+                <div class="card earth-text mb-2">
+                  {% set title, downloadurl = link.items() | first %}
+                  <div class="card-header text-center">{{ title }}</div>
+                  <div class="card-body text-center">
+                    {% for url in downloadurl %}
+                      {% set server, direct = url.items() | first %}
+                      <a href="{{ direct }}" class="btn btn-sm btn-outline-secondary mb-2 shadow me-1" target="_blank" rel="noopener noreferer">
+                      {{ server.title() }}
+                      </a>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ layout.footer() }}
+    <script type="text/javascript">
+      $(function(){
+        $(".stream-embed").not(":first").hide();
+        $(".change-stream").on("click", function(e) {
+          e.preventDefault();
+          $(".stream-embed").fadeOut();
+          $($(this).attr("href")).fadeIn();
+        });
+      });
+    </script>
+  </body>
+</html>

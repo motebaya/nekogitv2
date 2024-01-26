@@ -1,0 +1,78 @@
+{% import "contents.html" as layout %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ layout.header(title, desc) }}
+  </head>
+
+  <body>
+    {{ layout.heading() }}
+    <div class="container-md">
+    <div class="row justify-content-center">
+        <div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <img
+                src="data:image/png;base64,{{ tobase64(items.cover_blob).decode() }}"
+                class="img-thumbnail img-fluid shadow-lg"
+                alt="{{ items.cover_name }}"
+                style="height: auto; width: 180px"
+              />
+              <h5 class="chicken-text fw-medium mt-2">
+                {{ items.title }}
+              </h5>
+              <div class="ms-1">
+                <p class="earth-text text-break">
+                  <strong class="fw-bold"> Synopsis: </strong>{{ items.sinopsis }}
+                </p>
+              </div>
+              <div class="mt-2 fs-6 text-secondary fw-medium earth-text">
+                <ul class="list-group list-group-flush">
+                  {% for k, v in items.to_dict(items).items() %}
+                    {% if k.lower() not in ['hanimeid', 'cover_name', 'cover_blob', 'id', 'sinopsis'] %}
+                      {% if k.lower() != "status" %}
+                        <li class="list-group-item">
+                            {{ k.title().replace("_", " ") }}: {{ v }}
+                        </li>
+                      {% else %}
+                        <li class="list-group-item">
+                          {{ k.title() }}
+                          <span class="badge bg-{{ 'success' if k.lower() == 'ongoing' else 'primary' }}"> {{ v }} </span>
+                        </li>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+              <div class="mt-2">
+                <ul class="list-group earth-text">
+                    <li class="list-group-item active" aria-current="true">
+                        <a
+                        href="#"
+                        class="disabled d-flex justify-content-between align-items-start text-decoration-none navbar-brand"
+                        >
+                        <span class="ms-1 me-auto">Episode:</span>
+                        <span>Release:</span>
+                    </a>
+                    </li>
+                    {% for episode in eps %}
+                      <li class="list-group-item">
+                        <a
+                          href="{{ episode.episodeid }}"
+                          class="d-flex justify-content-between align-items-start text-decoration-none text-secondary"
+                        >
+                          <span class="ms-1 me-auto">Episode {{ loop.index if 'batch' not in episode.episodeid else 'Batch' }}</span>
+                          <span>{{ episode.date }}</span>
+                        </a>
+                      </li>
+                    {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ layout.footer() }}
+  </body>
+</html>

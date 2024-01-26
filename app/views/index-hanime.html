@@ -1,0 +1,73 @@
+{% import "contents.html" as layout %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ layout.header(title, desc) }}
+  </head>
+
+  <body>
+    {{ layout.heading() }}
+    <div class="container-md">
+      <div class="row justify-content-center">
+        <div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-header earth-text text-center text-uppercase">
+              hanime index list
+            </div>
+            <div class="card-body">
+              <div class="row justify-content-center align-items-center">
+                <div class="col-md-8 text-center">
+                {% for letter in letters %}
+                    <a href="#{{ letter }}" class="btn btn-sm btn-outline-secondary me-1 shadow mt-1">
+                    {{ letter }}
+                    </a>
+                {% endfor %}
+                    <a href="##" class="btn btn-sm btn-outline-secondary me-0 shadow mt-1">#</a>
+                </div>
+              </div>
+              <div class="row justify-content-center align-items-center">
+                <div class="col-md-12 d-flex flex-column">
+                    <div class="earth-text mt-4" id="#">
+                        <h5 class="fs-5 text-secondary fw-bold"><i class="bi bi-tag me-1"></i>
+                          #
+                        </h5>
+                        <ul class="list-group list-group-flush">
+                          {% for hanimeid, title in  indexs %}
+                            {% if not title[0].isalpha() %}
+                              <li class="list-group-item">
+                                <a href="/hanime/{{ hanimeid }}" class="text-decoration-none navbar-brand text-wrap" rel="noopener noreferer">
+                                    {{ title }}
+                                </a>
+                              </li>
+                            {% endif %}
+                          {% endfor %}
+                        </ul>
+                    </div>
+                {% for letter in letters %}
+                    <div class="earth-text mt-4" id="{{ letter }}">
+                        <h5 class="fs-5 text-secondary fw-bold"><i class="bi bi-tag me-1"></i>
+                          {{ letter }}
+                        </h5>
+                        <ul class="list-group list-group-flush">
+                          {% for hanimeid, title in  indexs %}
+                            {% if title[0].isalpha() and title[0].lower() == letter.lower() %}
+                              <li class="list-group-item">
+                                <a href="/hanime/{{ hanimeid }}" class="text-decoration-none navbar-brand text-wrap" rel="noopener noreferer">
+                                    {{ title }}
+                                </a>
+                              </li>
+                            {% endif %}
+                          {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ layout.footer() }}
+  </body>
+</html>

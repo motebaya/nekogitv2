@@ -1,0 +1,34 @@
+{% import "contents.html" as layout %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ layout.header(title, desc) }}
+  </head>
+
+  <body>
+    {{ layout.heading() }}
+    <div class="container-md">
+      <div class="row justify-content-center">
+        <div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-header text-center text-uppercase fw-bold earth-text">Genre list</div>
+            <div class="card-body">
+              <ul class="list-group earth-text">
+                {% for (genre_id, genre_name, genre_total) in genres %}
+                <li class="list-group-item">
+                  <a href="/genres/{{ genre_id }}" class="d-flex align-items-center text-decoration-none navbar-brand justify-content-between"
+                  >
+                    {{ genre_name }}
+                    <span class="badge bg-secondary rounded-pill">{{ genre_total }}</span>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ layout.footer() }}
+  </body>
+</html>

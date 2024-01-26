@@ -1,0 +1,125 @@
+{% import "contents.html" as layout %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ layout.header(title, desc) }}
+  </head>
+
+  <body>
+    {{ layout.heading() }}
+    <div class="container-md">
+      <div class="row justify-content-center">
+        <div class="col-md-12">
+          <div class="card chicken-text">
+            <div class="card-header text-center">show {{ hanime | length }} results from query '{{ query }}'</div>
+            <div class="card-body">
+              {% for item in items %}
+              <div class="row g-2 mb-2">
+                <div class="col-md-6 d-flex position-relative justify-content-center overflow-hidden" style="height: 80px; align-items: flex-start; width: 150px">
+                  <img src="data:image/png;base64,{{ tobase64(
+                    item.cover_blob if item.__tablename__ == 'hanime_list' else item.thumbnail
+                  ).decode() }}" class="img-thumbnail img-fluid" alt="{{ 
+                    item.cover_name if item.__tablename__ == 'hanime_list' else item.thumbnail_alt
+                   }}"/>
+                </div>
+                <div class="col-md-6 ms-0">
+                  <p class="card-title mb-0">
+                    <a href="{{ url_for('animeinfo', hanimeid=item.hanimeid if item.__tablename__ == 'hanime_list' else item.episodeid) }}" class="navbar-brand fw-medium text-decoration-none fs-6 text-wrap">
+                      {{ 
+                        item.title if item.__tablename__ == 'hanime_list' else
+                          item.episodeid.replace('-', ' ').title()
+                       }}
+                    </a>
+                  </p>
+                  {% if item.__tablename__ == 'hanime_list' %}
+                    <p class="info-text">
+                      <i class="bi bi-tag me-1"></i> Genres: {{ genre_to_html(item.genres, genre) | safe }}
+                    </p>
+                    <p class="info-text">
+                      <i class="bi bi-bookmark me-1"></i> Status:
+                      <span class="badge bg-{{
+                          'success' if item.status.lower() == 'completed'
+                            else 'primary' if item.status.lower() == 'ongoing'
+                              else 'danger'
+                      }}">{{ item.status }}</span>
+                    </p>
+                    <p class="info-text">
+                      <i class="bi bi-clock me-1"></i>Release: {{ 
+                          item.tayang if item.tayang | length != 0 else '-1'
+                       }}
+                    </p>
+                  {% else %}
+                    {% set info = get_hanime_from_id(item.hanimeid) %}
+                    <p class="info-text">
+                      <i class="bi bi-tag me-1"></i>Genres: {{ genre_to_html(info.genres) | safe }}
+                    </p>
+                    <div class="info-text truncate-this overflow-auto">
+                      <i class="bi bi-bookmark me-1"></i>Synopsis: {{ info.sinopsis }}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
+
+              <div class="d-flex justify-content-center mt-3">
+                <nav aria-label="">
+                  <ul class="pagination">
+                    {% if pagination.has_prev %}
+                      {% if query %}
+                        {% set href = url_for('index_item_list', s=query, page=pagination.page - 1) %}
+                      {% elif genre %}
+                        {% set href = url_for('genres', genre=genre, page=pagination.page - 1) %}
+                      {% endif %}
+                      <li class="page-item">
+                        <a class="page-link" href="{{ href }}" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                    {% endif %}
+                    {% for pagenum in pagination.pages %}
+                      {% if pagenum %}
+                        {% if pagenum != pagination.page %}
+                          {% if query %}
+                            {% set href = url_for("index_item_list", s=query, page=pagenum) %}
+                          {% elif genre %}
+                            {% set href = url_for("genres", genre=genre, page=pagenum) %}
+                          {% endif %}
+                          <li class="page-item">
+                            <a class="page-link" href="{{ href }}">{{ pagenum }}</a>
+                          </li>
+                        {% else %}
+                          <li class="page-item active">
+                            <span class="page-link">{{ pagenum }}</span>
+                          </li>
+                        {% endif %}
+                      {% else %}
+                        <li class="page-item disabled">
+                          <span class="page-link" >...</span>
+                        </li>
+                      {% endif %}
+                    {% endfor %}
+
+                    {% if pagination.has_next %}
+                      {% if query %}
+                        {% set href = url_for("index_item_list", s=query, page=pagination.page + 1) %}
+                      {% elif genre %}
+                        {% set href = url_for("genres", genre=genre, page=pagination.page + 1) %}
+                      {% endif %}
+                      <li class="page-item">
+                        <a class="page-link" href="{{ href }}" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    {% endif %}
+                  </ul>
+                </nav>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ layout.footer() }}
+  </body>
+</html>

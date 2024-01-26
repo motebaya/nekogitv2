@@ -1,0 +1,113 @@
+{% macro header(title, desc) %}
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+<title>{{ title }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-icons.min.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"/>
+<link rel="shortcut icon" href="{{ url_for('static', filename='img/cat.ico') }}" type="image/x-icon"/>
+<meta property="og:title" content="{{ title }}" />
+<meta property="og:image" content="{{ url_for('static', filename='img/cat.ico') }}"/>
+<meta property="og:description" content="{{ desc }}" />
+<meta property="og:type" content="website stream" />
+{% endmacro %}
+<!-- haead topbar -->
+{% macro heading() %}
+<header class="shadow border-bottom mb-3 py-2">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="ms-lg-0 virgil-text text-decoration-none navbar-brand fw-bold me-3",>
+        PoiPoi
+        <span class="text-primary">.dev</span>
+      </a>
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li>
+          <a href="/index-list" class="fw-bold chicken-text text-decoration-none navbar-brand me-3">
+            <i class="bi bi-list-ul me-1"></i>Index
+          </a>
+        </li>
+        <li>
+          <a href="/genres" class="fw-bold chicken-text text-decoration-none navbar-brand me-3">
+            <i class="bi bi-tags me-1"></i>Genres
+          </a>
+        </li>
+        <li>
+          <a href="/random" class="fw-bold chicken-text text-decoration-none navbar-brand me-3">
+            <i class="bi bi-shuffle me-1"></i>Random
+          </a>
+        </li>
+        <li>
+          <div class="dropdown">
+            <a
+              class="dropdown-toggle navbar-brand chicken-text fw-bold text-decoration-none"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              ><i class="bi bi-palette"></i>
+              Themes
+            </a>
+            <ul class="dropdown-menu chicken-text">
+              <li>
+                <a class="dropdown-item" href="#" data-theme="auto">
+                  <i class="bi bi-sunrise-fill me-1"></i>Auto
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" data-theme="dark">
+                  <i class="bi bi-moon-stars-fill me-1"></i>Dark
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" data-theme="light">
+                  <i class="bi bi-sun-fill me-1"></i>Light
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+
+      <div class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-3">
+        <form action="{{ url_for('index_item_list') }}" class="ms-4 me-4" method="POST">
+          <div class="input-group">
+            <input
+              type="search"
+              name="s"
+              aria-label="search.."
+              class="form-control chicken-text"
+              placeholder="search title or genre here..."
+              required
+            />
+            <button class="btn btn-outline-secondary" type="submit">
+              <i class="bi bi-search me-1"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+{% endmacro %}
+<!-- footer -->
+{% macro footer() %}
+<a href="#" class="back-to-top"><i class="bi bi-chevron-double-up"></i></a>
+<footer class="footer mt-auto mb-2">
+  <div class="container-fluid">
+    <div class="text-center">
+      <p>
+        &copy; Copyright
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+        - Made With &#9749; by
+        <a href="https://github.com/motebaya">Motebaya</a>
+      </p>
+    </div>
+  </div>
+</footer>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endmacro %}
